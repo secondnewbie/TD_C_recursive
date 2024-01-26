@@ -30,6 +30,10 @@ file_data = {
 
 
 def json_get(file_data: dict, getv: str):
+    """
+    :param file_data: 원본 데이터
+    :param getv: 검색어
+    """
     box = []
     for k, y in file_data.items():
         if k == getv:
