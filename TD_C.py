@@ -76,7 +76,7 @@ def json_modify(data: dict, key_lst: list, val) -> None:
     if last_key in data:
         data[last_key] = val
 
-    pprint.pprint(json_data)  # 결과 프린트
+    pprint.pprint(file_data)  # 결과 프린트
 
 
 insert_key_data = {'project': {'shot': {'EP0005': {'EP0005_0050': {'frange': [1001, 1200]}}}}}
