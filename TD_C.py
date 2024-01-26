@@ -1,3 +1,5 @@
+import pprint
+
 file_data = {
     'project': {
         'name': 'mermaid',
@@ -24,6 +26,8 @@ file_data = {
         }
     }
 }
+
+
 # key_data = {'project': {'shot': {'EP0001': {'EP0001_0010': {'frange': None}}}}}
 
 
@@ -31,7 +35,8 @@ file_data = {
 def json_get(self):
     pass
 
-def json_insert(data1:dict, data2:dict):
+
+def json_insert(data1: dict, data2: dict):
     for k, v in data1.items():
         for i, j in data2.items():
             if isinstance(v, dict):
@@ -42,7 +47,8 @@ def json_insert(data1:dict, data2:dict):
                         return
                     json_insert(v, j)
 
-def json_delete(data1:dict, data2:dict):
+
+def json_delete(data1: dict, data2: dict):
     for k, v in data1.items():
         for i, j in data2.items():
             if i == 'EP0005':
@@ -54,13 +60,30 @@ def json_delete(data1:dict, data2:dict):
                     json_delete(v, j)
 
 
-def json_modify(self):
-    pass
+def json_modify(data: dict, key_lst: list, val) -> None:
+    """
+    :param data: 값을 바꿀 딕셔너리
+    :param key_lst: 값을 바꿀 키 경로(리스트)
+    :param val: 변경할 밸류 값
+    """
+    for key in key_lst[:-1]:
+        if key in data and isinstance(data[key], dict):  # 바꾸려는 키값이 data에 포함된 동시에 딕셔너리인지 확인
+            data = data[key]  # 딕셔너리 탐색을 위해 현재 키 값을 'data'로 업데이트
+        else:
+            return
+
+    last_key = key_lst[-1]  # 마지막 키 값을 변수로 지정
+    if last_key in data:
+        data[last_key] = val
+
+    pprint.pprint(json_data)  # 결과 프린트
+
 
 insert_key_data = {'project': {'shot': {'EP0005': {'EP0005_0050': {'frange': [1001, 1200]}}}}}
 json_insert(file_data, insert_key_data)
 print(file_data)
 
+key_data = ['project', 'shot', 'EP0001', 'EP0001_0010', 'frange']
 json_modify(file_data, ['project', 'shot', 'EP0001', 'EP0001_0010', 'frange'], [1001, 1100])
 json_modify(file_data, key_data, [1001, 1100])
 
