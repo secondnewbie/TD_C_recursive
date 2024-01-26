@@ -37,23 +37,29 @@ def json_get(self):
 
 
 def json_insert(data1: dict, data2: dict):
+    """
+    :param data1: 원본 데이터
+    :param data2: 입력할 값의 경로
+    """
     for k, v in data1.items():
         for i, j in data2.items():
             if isinstance(v, dict):
                 if isinstance(j, dict):
                     if k != i:
                         data1[i] = j
-                        print(data1)
                         return
                     json_insert(v, j)
 
 
 def json_delete(data1: dict, data2: dict):
+    """
+    :param data1: 원본 데이터
+    :param data2: 삭제할 값의 경로
+    """
     for k, v in data1.items():
         for i, j in data2.items():
-            if i == 'EP0005':
+            if not isinstance(j, dict):
                 data1[i] = None
-                print(data1)
                 return
             if isinstance(v, dict):
                 if isinstance(j, dict):
@@ -75,24 +81,31 @@ def json_modify(data: dict, key_lst: list, val) -> None:
             json_modify(data[key], key_lst[1:], val)
 
 
-insert_key_data = {'project': {'shot': {'EP0005': {'EP0005_0050': {'frange': [1001, 1200]}}}}}
-key_data = ['project', 'shot', 'EP0001', 'EP0001_0010', 'frange']
+# Get
+
 
 # Insert
+insert_key_data = {'project': {'shot': {'EP0005': {'EP0005_0050': {'frange': [1001, 1200]}}}}}
+json_insert(file_data, insert_key_data)
+
 print("-"*110, "\n")
 print("Insert Result", "\n")
-json_insert(file_data, insert_key_data)
 pprint.pprint(file_data)
+
 
 # Delete
-print("-"*110, "\n")
-print("Delete Result", "\n")
 delete_key_data = {'project': {'shot': {'EP0005': None}}}
 json_delete(file_data, delete_key_data)
+
+print("-"*110, "\n")
+print("Delete Result", "\n")
 pprint.pprint(file_data)
 
+
 # Modify
+key_data = ['project', 'shot', 'EP0001', 'EP0001_0010', 'frange']
+json_modify(file_data, key_data, [4321, 1234])
+
 print("-"*110, "\n")
 print("Modify Result", "\n")
-json_modify(file_data, key_data, [4321, 1234])
 pprint.pprint(file_data)
