@@ -39,9 +39,7 @@ def json_get(file_data: dict, getv: str):
         if k == getv:
             box.append(y)
         elif isinstance(y, dict):
-            result = json_get(y,getv)
-
-            box.extend(result)
+            box.extend(json_get(y,getv))
 
     return box
 
@@ -91,8 +89,9 @@ def json_modify(data: dict, key_lst: list, val) -> None:
 
 
 # Get
+print("Get Result", "\n")
 result = json_get(file_data, 'frange')
-print(result)
+pprint.pprint(result)
 
 # Insert
 insert_key_data = {'project': {'shot': {'EP0005': {'EP0005_0050': {'frange': [1001, 1200]}}}}}
