@@ -43,7 +43,7 @@ def json_insert(data1: dict, data2: dict):
                 if isinstance(j, dict):
                     if k != i:
                         data1[i] = j
-                        # print(data1)
+                        print(data1)
                         return
                     json_insert(v, j)
 
@@ -80,13 +80,17 @@ def json_modify(data: dict, key_lst: list, val) -> None:
 
 
 insert_key_data = {'project': {'shot': {'EP0005': {'EP0005_0050': {'frange': [1001, 1200]}}}}}
-json_insert(file_data, insert_key_data)
-print(file_data)
-
 key_data = ['project', 'shot', 'EP0001', 'EP0001_0010', 'frange']
-json_modify(file_data, ['project', 'shot', 'EP0001', 'EP0001_0010', 'frange'], [1001, 1100])
-json_modify(file_data, key_data, [1001, 1100])
 
+# Insert
+json_insert(file_data, insert_key_data)
+pprint.pprint(file_data)
+
+# Delete
 delete_key_data = {'project': {'shot': {'EP0005': None}}}
 json_delete(file_data, delete_key_data)
-print(file_data)
+pprint.pprint(file_data)
+
+
+# Modify
+json_modify(file_data, key_data, [4321, 1234])
