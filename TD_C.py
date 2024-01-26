@@ -32,9 +32,17 @@ file_data = {
 
 
 # class recursive:
-def json_get(self):
-    pass
+def json_get(file_data: dict, getv: str):
+    box = []
+    for k, y in file_data.items():
+        if k == getv:
+            box.append(y)
+        elif isinstance(y, dict):
+            result = json_get(y,getv)
 
+            box.extend(result)
+
+    return box
 
 def json_insert(data1: dict, data2: dict):
     """
@@ -82,7 +90,8 @@ def json_modify(data: dict, key_lst: list, val) -> None:
 
 
 # Get
-
+result = json_get(file_data, 'frange')
+print(result)
 
 # Insert
 insert_key_data = {'project': {'shot': {'EP0005': {'EP0005_0050': {'frange': [1001, 1200]}}}}}
