@@ -28,10 +28,7 @@ file_data = {
 }
 
 
-# key_data = {'project': {'shot': {'EP0001': {'EP0001_0010': {'frange': None}}}}}
 
-
-# class recursive:
 def json_get(file_data: dict, getv: str):
     box = []
     for k, y in file_data.items():
