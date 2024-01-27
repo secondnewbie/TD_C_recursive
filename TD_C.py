@@ -48,14 +48,14 @@ def json_insert(data1: dict, data2: dict):
     :param data1: 원본 데이터
     :param data2: 입력할 값의 경로
     """
-    for k, v in data1.items():
-        for i, j in data2.items():
-            if isinstance(v, dict):
-                if isinstance(j, dict):
-                    if k != i:
-                        data1[i] = j
+    for k, v in data2.items():
+        for i, j in data1.items():
+            if isinstance(j, dict):
+                if isinstance(v, dict):
+                    if i != k:
+                        data1[k] = v
                         return
-                    json_insert(v, j)
+                    json_insert(j, v)
 
 
 def json_delete(data1: dict, data2: dict):
@@ -63,14 +63,14 @@ def json_delete(data1: dict, data2: dict):
     :param data1: 원본 데이터
     :param data2: 삭제할 값의 경로
     """
-    for k, v in data1.items():
-        for i, j in data2.items():
-            if not isinstance(j, dict):
-                data1[i] = None
+    for k, v in data2.items():
+        for i, j in data1.items():
+            if not isinstance(v, dict):
+                data1[k] = None
                 return
-            if isinstance(v, dict):
-                if isinstance(j, dict):
-                    json_delete(v, j)
+            if isinstance(j, dict):
+                if isinstance(v, dict):
+                    json_delete(j, v)
 
 
 def json_modify(data: dict, key_lst: list, val) -> None:
